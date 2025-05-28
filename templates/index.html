@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post" action="/add">
+    <div class="mb-3">
+        <label for="content" class="form-label">日報内容</label>
+        <textarea class="form-control" id="content" name="content" rows="4" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">登録</button>
+    <a href="/list" class="btn btn-secondary">日報一覧</a>
+</form>
+{% endblock %}

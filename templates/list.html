@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>日報一覧</h2>
+<form method="get" class="row g-3 mb-3">
+    <div class="col-auto">
+        <input type="date" name="search_date" class="form-control" value="{{ search_date }}">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">日付で検索</button>
+    </div>
+    <div class="col-auto">
+        <a href="/list?week_offset={{ week_offset-1 }}" class="btn btn-outline-secondary">前の週</a>
+        <a href="/list?week_offset={{ week_offset+1 }}" class="btn btn-outline-secondary">次の週</a>
+    </div>
+    <div class="col-auto">
+        <a href="/download?week_offset={{ week_offset }}" class="btn btn-success">CSVダウンロード</a>
+    </div>
+</form>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>日付</th>
+            <th>内容</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for n in nippous %}
+        <tr>
+            <td>{{ n.report_date }}</td>
+            <td>{{ n.content|e }}</td>
+            <td>
+                {% if n.is_today() %}
+                <a href="/edit/{{ n.id }}" class="btn btn-sm btn-warning">編集</a>
+                <a href="/delete/{{ n.id }}" class="btn btn-sm btn-danger" onclick="return confirm('削除しますか？');">削除</a>
+                {% else %}
+                -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="/" class="btn btn-secondary">新規登録へ</a>
+{% endblock %}
